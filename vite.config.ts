@@ -6,12 +6,12 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
 
   return {
+    plugins: [react()],
+    base: "/archana-portfolio/",   // ✅ MUST MATCH REPO NAME
     server: {
       port: 3000,
       host: "0.0.0.0",
     },
-    plugins: [react()],
-    base: "/portfolio/",   // MUST MATCH REPO NAME
     define: {
       "process.env.API_KEY": JSON.stringify(env.GEMINI_API_KEY),
       "process.env.GEMINI_API_KEY": JSON.stringify(env.GEMINI_API_KEY),
