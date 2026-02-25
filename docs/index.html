@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Archana Raj VK - Portfolio</title>
+  <!-- Google Fonts: Playfair Display & Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style type="text/tailwindcss">
+    @layer base {
+      body {
+        @apply bg-bg-primary text-text-primary font-body antialiased;
+        /* Reverted to default cursor */
+      }
+      .nav-link {
+        @apply relative text-text-secondary hover:text-accent-light transition-colors duration-300 cursor-pointer;
+      }
+      .nav-link::after {
+        content: '';
+        @apply absolute left-0 bottom-0 h-0.5 bg-accent-light w-0 transition-all duration-300;
+      }
+      .nav-link:hover::after {
+        @apply w-full;
+      }
+      .nav-link-mobile {
+        @apply text-text-primary hover:text-accent-light transition-colors duration-300 cursor-pointer;
+      }
+
+      /* Custom styles for glassmorphism effect */
+      .glass-effect {
+        background-color: rgba(30, 30, 30, 0.7); /* bg-bg-secondary with transparency */
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px); /* For Safari support */
+        border-radius: 12px; /* Consistent rounded edges */
+      }
+
+      /* Glowing button effect for gradient buttons */
+      .btn-gradient-glow {
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+        cursor: pointer; /* Ensure button cursor is pointer */
+      }
+
+      .btn-gradient-glow::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle at center, rgba(var(--accent-light-rgb), 0.5) 0%, rgba(var(--accent-dark-rgb), 0.5) 20%, transparent 70%);
+        opacity: 0;
+        transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+        transform: scale(0);
+        z-index: -1;
+      }
+
+      .btn-gradient-glow:hover::before {
+        opacity: 1;
+        transform: scale(1);
+        animation: rotateGlow 2s linear infinite; /* Optional: subtle rotation for dynamic glow */
+      }
+
+      @keyframes rotateGlow {
+        from {
+          transform: rotate(0deg) scale(1);
+        }
+        to {
+          transform: rotate(360deg) scale(1);
+        }
+      }
+    }
+
+    @layer utilities {
+      /* Animation for fade-in */
+      .animate-fade-in {
+        animation: fadeIn 1s ease-out forwards;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+
+      /* Animation for slide-up */
+      .animate-slide-up {
+        animation: slideUp 1s ease-out forwards;
+      }
+      @keyframes slideUp {
+        from { opacity: 0; transform: translateY(50px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      /* Animation for slide-right */
+      .animate-slide-right {
+        animation: slideRight 1s ease-out forwards;
+      }
+      @keyframes slideRight {
+        from { opacity: 0; transform: translateX(-50px); }
+        to { opacity: 1; transform: translateX(0); }
+      }
+
+      /* Animation for slide-left */
+      .animate-slide-left {
+        animation: slideLeft 1s ease-out forwards;
+      }
+      @keyframes slideLeft {
+        from { opacity: 0; transform: translateX(50px); }
+        to { opacity: 1; transform: translateX(0); }
+      }
+
+      /* Blob animation */
+      @keyframes blob-slow {
+        0% {
+          transform: translate(0px, 0px) scale(1);
+        }
+        33% {
+          transform: translate(30px, -50px) scale(1.1);
+        }
+        66% {
+          transform: translate(-20px, 20px) scale(0.9);
+        }
+        100% {
+          transform: translate(0px, 0px) scale(1);
+        }
+      }
+
+      /* Keyframes for glowing text/icons for dark theme */
+      .animate-glow-accent-light:hover {
+        animation: glowAccentLight 1.5s infinite alternate;
+        cursor: pointer; /* Ensure icon cursor is pointer */
+      }
+      @keyframes glowAccentLight {
+        from {
+          text-shadow: 0 0 5px rgba(var(--accent-light-rgb), 0.5), 0 0 10px rgba(var(--accent-light-rgb), 0.3);
+        }
+        to {
+          text-shadow: 0 0 10px rgba(var(--accent-light-rgb), 0.8), 0 0 20px rgba(var(--accent-light-rgb), 0.6);
+        }
+      }
+
+      /* Waving hand animation */
+      .animate-wave {
+        animation: wave 2s infinite;
+      }
+      @keyframes wave {
+        0% { transform: rotate(0deg); }
+        10% { transform: rotate(14deg); }
+        20% { transform: rotate(-8deg); }
+        30% { transform: rotate(14deg); }
+        40% { transform: rotate(-4deg); }
+        50% { transform: rotate(10deg); }
+        60% { transform: rotate(0deg); }
+        100% { transform: rotate(0deg); }
+      }
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'bg-primary': '#0A0A0A', // Main very dark background
+            'bg-secondary': '#1E1E1E', // Slightly lighter dark background for cards, etc.
+            'accent-light': '#FFFFFF', // Bright white for primary accents, glows
+            'accent-dark': '#CCCCCC', // Lighter gray for secondary accents, subtle glows
+            'text-primary': '#F5F7FA', // Off-white for main text
+            'text-secondary': '#ADB5BD', // Medium gray for secondary text
+            'hero-bg-light': '#F0F4F8', // Specific light background for Hero
+            'hero-text-blue': '#587C9E', // Desaturated blue/gray for Hero text
+            // RGB values for dynamic CSS gradients/shadows
+            'accent-light-rgb': '255, 255, 255',
+            'accent-dark-rgb': '204, 204, 204',
+          },
+          fontFamily: {
+            display: ['"Playfair Display"', 'serif'],
+            body: ['Poppins', 'sans-serif'],
+          },
+          keyframes: {
+            'blob-slow': {
+              '0%, 100%': { transform: 'translate(0px, 0px) scale(1)' },
+              '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+              '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+            },
+            fadeIn: {
+              from: { opacity: '0' },
+              to: { opacity: '1' },
+            },
+            slideUp: {
+              from: { opacity: '0', transform: 'translateY(50px)' },
+              to: { opacity: '1', transform: 'translateY(0)' },
+            },
+            slideRight: {
+              from: { opacity: '0', transform: 'translateX(-50px)' },
+              to: { opacity: '1', transform: 'translateX(0)' },
+            },
+            slideLeft: {
+              from: { opacity: '0', transform: 'translateX(50px)' },
+              to: { opacity: '1', transform: 'translateX(0)' },
+            },
+            glowAccentLight: {
+              from: {
+                textShadow: '0 0 5px rgba(255, 255, 255, 0.5), 0 0 10px rgba(255, 255, 255, 0.3)',
+              },
+              to: {
+                textShadow: '0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6)',
+              },
+            },
+            wave: {
+              '0%': { transform: 'rotate(0deg)' },
+              '10%': { transform: 'rotate(14deg)' },
+              '20%': { transform: 'rotate(-8deg)' },
+              '30%': { transform: 'rotate(14deg)' },
+              '40%': { transform: 'rotate(-4deg)' },
+              '50%': { transform: 'rotate(10deg)' },
+              '60%': { transform: 'rotate(0deg)' },
+              '100%': { transform: 'rotate(0deg)' },
+            },
+          },
+          animation: {
+            'blob-slow': 'blob-slow 7s infinite ease-in-out',
+            'fade-in': 'fadeIn 1s ease-out forwards',
+            'slide-up': 'slideUp 1s ease-out forwards',
+            'slide-right': 'slideRight 1s ease-out forwards',
+            'slide-left': 'slideLeft 1s ease-out forwards',
+            'wave': 'wave 2s infinite',
+          },
+        },
+      },
+    }
+  </script>
+<link rel="stylesheet" href="/index.css">
+  <script type="importmap">
+  {
+    "imports": {
+      "react": "https://aistudiocdn.com/react@^19.2.0",
+      "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+      "react/": "https://aistudiocdn.com/react@^19.2.0/"
+    }
+  }
+  </script>
+  <script type="module" crossorigin src="/portfolio/assets/index-D2pERx2Z.js"></script>
+</head>
+<body class="bg-cover bg-center">
+  <div id="root"></div>
+
+
+  
+</body>
+</html>
